@@ -5,6 +5,7 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.1"][net.mikera/core.matrix "0.62.0"]]
   :main ^:skip-aot adv2015.core
+  :plugins [[lein-cloverage "1.2.2"]]
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}})
