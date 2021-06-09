@@ -1,4 +1,5 @@
 (ns adv2015.day6
+  (:require [clojure.pprint :as pp])
   (:gen-class))
     
   (defn make-board 

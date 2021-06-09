@@ -1,4 +1,5 @@
 (ns adv2015.day4
+  (:require [clojure.pprint :as pp])
   (:gen-class))
   
   (def coder (java.security.MessageDigest/getInstance "MD5"))

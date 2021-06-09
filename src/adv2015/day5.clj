@@ -1,4 +1,5 @@
 (ns adv2015.day5
+  (:require [clojure.pprint :as pp])
   (:gen-class))
   
   

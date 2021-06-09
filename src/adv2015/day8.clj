@@ -1,4 +1,5 @@
 (ns adv2015.day8
+  (:require [clojure.pprint :as pp])
   (:gen-class))
   
   (defn prep-str [str]
