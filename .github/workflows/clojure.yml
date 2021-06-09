@@ -1,0 +1,70 @@
+name: Clojure CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Cache local Maven repository
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
+        restore-keys: |
+           ${{ runner.os }}-maven-
+    
+    - name: Install dependencies
+      run: lein deps
+      
+    - name: Run tests
+      run: lein test
+      
+    - name: Run cloverage
+      run: lein cloverage --codecov --coveralls
+      
+    - name: upload coverage artifact
+      uses: actions/upload-artifact@v2
+      with:
+       name: cloverage
+       path: /home/runner/work/advent-of-code-2015/advent-of-code-2015/target/coverage/
+    
+    - name: upload to codecov
+      uses: codecov/codecov-action@v1
+      with:
+        files: /home/runner/work/advent-of-code-2015/advent-of-code-2015/target/coverage/codecov.json
+        
+      
+    # Mega-Linter
+    - name: Mega-Linter
+      id: ml
+        # You can override Mega-Linter flavor used to have faster performances
+        # More info at https://nvuillam.github.io/mega-linter/flavors/
+      uses: nvuillam/mega-linter@v4
+      env:
+          # All available variables are described in documentation
+          # https://nvuillam.github.io/mega-linter/configuration/
+        ENABLE: CLOJURE  
+        EXCLUDED_DIRECTORIES: test  
+        VALIDATE_ALL_CODEBASE: true #${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }} # Validates all source when push on master, else just the git diff with master. Override with true if you always want to lint all sources
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
+          # DISABLE: COPYPASTE,SPELL # Uncomment to disable copy-paste and spell checks
+
+      # Upload Mega-Linter artifacts
+    - name: Archive production artifacts
+      if: ${{ success() }} || ${{ failure() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: Mega-Linter reports
+        path: |
+          report
+          mega-linter.log
