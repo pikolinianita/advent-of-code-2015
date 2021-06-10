@@ -4,23 +4,29 @@
 			
 (deftest day5
 	(testing "aaa"
-    (is (= true (nice? "aaa"))))
+		(is (= true (nice? "aaa"))))
 	(testing "ugknbfddgicrmopn"
-    (is (= true (nice? "ugknbfddgicrmopn"))))
+		(is (= true (nice? "ugknbfddgicrmopn"))))
 	(testing "jchzalrnumimnmhp"
-    (is (= false (nice? "jchzalrnumimnmhp"))))
+		(is (= false (nice? "jchzalrnumimnmhp"))))
 	(testing "haegwjzuvuyypxyu"
-    (is (= false (nice? "haegwjzuvuyypxyu"))))
+		(is (= false (nice? "haegwjzuvuyypxyu"))))
 	(testing "dvszwmarrgswjxmb"
-    (is (= false (nice? "dvszwmarrgswjxmb"))))
+		(is (= false (nice? "dvszwmarrgswjxmb"))))
+	(testing "a few"
+		(is (= 2 (day-5 nice? ["dvszwmarrgswjxmb" "aaa" "ugknbfddgicrmopn" "haegwjzuvuyypxyu"]))))
+)	
 	
+(deftest day5-p2	
 	(testing "qjhvhtzxzqqjkmpb"
-    (is (= true (nice2? "qjhvhtzxzqqjkmpb"))))
+		(is (= true (nice2? "qjhvhtzxzqqjkmpb"))))
 	(testing "xxyxx"
-    (is (= true (nice2? "xxyxx"))))
+		(is (= true (nice2? "xxyxx"))))
 	(testing "uurcxstgmygtbstg"
-    (is (= false (nice2? "uurcxstgmygtbstg"))))
+		(is (= false (nice2? "uurcxstgmygtbstg"))))
 	(testing "ieodomkazucvgmuy"
-    (is (= false (nice2? "ieodomkazucvgmuy"))))
+		(is (= false (nice2? "ieodomkazucvgmuy"))))
+	(testing "a few"
+		(is (= 2 (day-5 nice2? ["xxyxx" "uurcxstgmygtbstg" "qjhvhtzxzqqjkmpb"]))))
 )
 

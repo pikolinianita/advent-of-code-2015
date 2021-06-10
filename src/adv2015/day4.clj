@@ -21,6 +21,7 @@
 	
   
 (defn helper [mes count pred?]
+	"run proper combinations one by one, stops when pred? fulfilled"
 	(let [byte-arr (.digest (java.security.MessageDigest/getInstance "MD5") (.getBytes (str mes count)))]
 		(if (pred? byte-arr)
 			count
