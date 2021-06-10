@@ -2,38 +2,41 @@
   (:require [clojure.pprint :as pp])
   (:gen-class))
   
-  (def coder (java.security.MessageDigest/getInstance "MD5"))
-  
-	(defn helper [mes count]
-	(let [byte-arr (.digest (java.security.MessageDigest/getInstance "MD5") (.getBytes (str mes count)))]
-		(if (and 
-				(= 0 (get byte-arr 0))
-				(= 0 (get byte-arr 1))
-				(> 15 (get byte-arr 2))
-				(< 0 (get byte-arr 2)))
-			count
-			(recur mes (inc count)) 
-	)))
-	 
-	(defn md5a [arg]
-	
-   (apply str (.digest (java.security.MessageDigest/getInstance "MD5") (.getBytes "pqrstuv1048970")))
-   (helper arg 0)
-   )
-	
+(defn part1?
+"does start with at least five zeroes?"
+ [byte-arr]
+  (and 
+	(= 0 (get byte-arr 0))
+	(= 0 (get byte-arr 1))
+	(> 15 (get byte-arr 2))
+	(< 0 (get byte-arr 2))))
 
-  (defn md5b [mes arr count]
-   (let [byte-arr (.digest (java.security.MessageDigest/getInstance "MD5") (.getBytes (str mes count)))]
-		(if (and 
-				(= 0 (get byte-arr 0))
-				(= 0 (get byte-arr 1))
-				(= 0 (get byte-arr 2))
-				)
-			(do 
-				(def new-res (conj arr count))
-				(println (str count ": " (get byte-arr 0) " " (get byte-arr 1) " " (get byte-arr 2))))
-			(def new-res arr))
-		(if (< count 10000000 )	
-		(recur mes new-res (inc count))
-		new-res)
-   ))
+(defn part2? 
+  "does start with at least six zeroes?"
+  [byte-arr]	
+  (and 
+	(= 0 (get byte-arr 0))
+	(= 0 (get byte-arr 1))
+	(= 0 (get byte-arr 2))))
+	
+  
+(defn helper [mes count pred?]
+	(let [byte-arr (.digest (java.security.MessageDigest/getInstance "MD5") (.getBytes (str mes count)))]
+		(if (pred? byte-arr)
+			count
+			(recur mes (inc count) pred?))))
+	 
+(defn day-3-p-1
+	"find MD5 hashes which, in hexadecimal, start with at least five zeroes"
+	[msg]
+	(helper msg 0 part1?))
+	
+(defn day-3-p-2 
+	"find MD5 hashes which, in hexadecimal, start with at least six zeroes"
+	[msg]
+	(helper msg 0 part2?))
+
+(defn get-answer [message]
+	(println "Answer for first part is: " (day-3-p-1 message)) 
+	(println "Answer for second part is: " (day-3-p-2 message))
+)
