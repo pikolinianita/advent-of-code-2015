@@ -66,4 +66,4 @@
 		(println "Answer for first part is: " (day-16-p-1 lines)) 
 		(println "Answer for second part is: " (day-16-p-2 lines))))
 		
-(get-answer "day16input.txt")	 	
+;(get-answer "day16input.txt")	 	

@@ -11,4 +11,6 @@ pom.xml.asc
 /.prepl-port
 .hgignore
 .hg/
-day*input.txt
+day*.txt
+.nightlight.edn
+/.*
